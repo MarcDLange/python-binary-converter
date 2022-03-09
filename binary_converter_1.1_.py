@@ -1,18 +1,35 @@
+import sys
+
 binary_number = []
+base = 0
+
 
 def welcome():
     print('=====================================')
-    print('|  Welcome to binary converter 1.1  |')
+    print('|  Welcome to binary converter 1.2  |')
     print('|  Please enter a decimal number to |')
     print('|  convert it into a binary number. |')
     print('=====================================')
 
 
+def mode_selection(user_input):
+    global base
+    if user_input == 1:
+        base = 2
+    elif user_input == 2:
+        base = 16
+    else:
+        print('Invalid input!')
+        sys.exit(0)
+        
+
+
 def instructions():
-    print('\nEnter a decimal number: ', end='')
+    print('Enter [1] to calculate a binary number')
+    print('or [2] to calculate a hexadecimal number.')
 
 
-def get_input_as_int():
+def validate_input():
     try:
         user_input = input()
         return int(user_input)
@@ -21,12 +38,16 @@ def get_input_as_int():
         return 0
 
 
-def convert_into_binary(decimal):
+def convert(decimal):
     global binary_number
-    result = divmod(decimal, 2)
-    binary_number.append(result[1])
+    result = divmod(decimal, base)
+    if base == 2:
+        binary_number.append(result[1])
+    elif result[0] > 9:
+        print(result)
+        binary_number.append('A')
     if result[0] > 0:
-        convert_into_binary(result[0])
+        convert(result[0])
     else:
         binary_number.reverse()
         temporary_string = ''
@@ -39,5 +60,9 @@ def convert_into_binary(decimal):
 if __name__ == '__main__':
     welcome()
     instructions()
-    user_input = get_input_as_int()
-    convert_into_binary(user_input)
+    print('Make a choice: ', end='')
+    user_input = validate_input()
+    mode_selection(user_input)
+    print('\nEnter a decimal number: ', end='')
+    user_input = validate_input()
+    convert(user_input)
