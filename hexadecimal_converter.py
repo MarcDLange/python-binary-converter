@@ -1,6 +1,6 @@
 def convert_to_letter(number):
     if number == 10:
-       number = 'A'
+        number = 'A'
     if number == 11:
         number = 'B'
     if number == 12:
